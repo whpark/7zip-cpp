@@ -2,8 +2,8 @@
 
 #include "SevenZipLibrary.h"
 #include "CompressionFormat.h"
-#include <7zip/Archive/IArchive.h>
-#include <7zTypes.h>
+#include <7zip/cpp/7zip/Archive/IArchive.h>	// PWH. vcpkg path
+#include <7zip/c/7zTypes.h>					// PWH. vcpkg path
 #include "GUIDs.h"
 #include "FileSys.h"
 #include "ArchiveOpenCallback.h"
@@ -24,10 +24,10 @@ namespace SevenZip
 		static bool DetectCompressionFormat(const SevenZipLibrary& library, const TString& archivePath,
 			CompressionFormatEnum & archiveCompressionFormat, const TString& password);
 
-		static bool UsefulFunctions::GetNumberOfItems(const SevenZipLibrary & library, const TString & archivePath,
+		static bool GetNumberOfItems(const SevenZipLibrary & library, const TString & archivePath,
 			CompressionFormatEnum & format, size_t & numberofitems, const TString& password);
 
-		static bool UsefulFunctions::GetItemsNames(const SevenZipLibrary & library, const TString & archivePath,
+		static bool GetItemsNames(const SevenZipLibrary & library, const TString & archivePath,
 			CompressionFormatEnum & format, size_t & numberofitems,
 			std::vector<std::wstring> & itemnames, std::vector<size_t> & origsizes, const TString& password);
 

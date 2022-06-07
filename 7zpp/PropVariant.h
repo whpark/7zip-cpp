@@ -4,7 +4,7 @@
 #pragma once
 
 
-#include <Common/MyTypes.h>
+#include <7zip/cpp/Common/MyTypes.h>	// PWH. vcpkg path
 
 
 namespace SevenZip

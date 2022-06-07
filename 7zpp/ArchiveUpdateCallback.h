@@ -3,9 +3,9 @@
 #pragma once
 
 
-#include <7zip/Archive/IArchive.h>
-#include <7zip/ICoder.h>
-#include <7zip/IPassword.h>
+#include <7zip/cpp/7zip/Archive/IArchive.h>	// PWH. vcpkg path
+#include <7zip/cpp/7zip/ICoder.h>			// PWH. vcpkg path
+#include <7zip/cpp/7zip/IPassword.h>		// PWH. vcpkg path
 #include <vector>
 #include "FileInfo.h"
 #include "ProgressCallback.h"

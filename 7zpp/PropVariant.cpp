@@ -2,7 +2,7 @@
 //   ./CPP/Windows/PropVariant.cpp
 #include "stdafx.h"
 #include "PropVariant.h"
-#include <Common/Defs.h>
+#include <7zip/cpp/Common/Defs.h>	// PWH. vcpkg path
 
 
 namespace SevenZip

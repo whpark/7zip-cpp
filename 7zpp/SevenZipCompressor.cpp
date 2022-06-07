@@ -43,6 +43,7 @@ bool SevenZipCompressor::AddMemory(const TString& filePath, void* memPointer, si
 	FilePathInfo memFile;
 	memFile.rootPath = FileSys::GetPath(filePath);
 	memFile.FileName = FileSys::GetFileName(filePath);
+	memFile.FilePath = filePath;	// PWH.
 	memFile.memFile = true;
 	memFile.memPointer = memPointer;
 	memFile.Size = size;

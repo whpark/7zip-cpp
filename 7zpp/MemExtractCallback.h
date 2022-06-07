@@ -3,9 +3,9 @@
 #pragma once
 
 
-#include <7zip/Archive/IArchive.h>
-#include <7zip/IPassword.h>
-#include <7zip/UI/Common/UpdateCallback.h>
+#include <7zip/cpp/7zip/Archive/IArchive.h>	// PWH. vcpkg path
+#include <7zip/cpp/7zip/IPassword.h>		// PWH. vcpkg path
+//#include <7zip/UI/Common/UpdateCallback.h>
 
 #include "ProgressCallback.h"
 
@@ -18,7 +18,7 @@ namespace intl
 {
 	class MemExtractCallback : public IArchiveExtractCallback, public ICryptoGetTextPassword
 	{
-	private:
+	protected:	// PWH. 2022.04.24. private -> protected
 
 		long m_refCount;
 
@@ -60,7 +60,7 @@ namespace intl
 		// ICryptoGetTextPassword
 		STDMETHOD(CryptoGetTextPassword)( BSTR* password );
 
-	private:
+	protected:	// PWH. 2022.04.24. private -> protected
 
 		void GetPropertyFilePath( UInt32 index );
 		void GetPropertyIsDir( UInt32 index );

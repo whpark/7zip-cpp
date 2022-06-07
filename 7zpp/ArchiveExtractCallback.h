@@ -3,9 +3,9 @@
 #pragma once
 
 
-#include <7zip/Archive/IArchive.h>
-#include <7zip/IPassword.h>
-#include <7zip/UI/Common/UpdateCallback.h>
+#include <7zip/cpp/7zip/Archive/IArchive.h>	// PWH. vcpkg path
+#include <7zip/cpp/7zip/IPassword.h>		// PWH. vcpkg path
+//#include <7zip/UI/Common/UpdateCallback.h>	// PWH. no file
 
 #include "ProgressCallback.h"
 
