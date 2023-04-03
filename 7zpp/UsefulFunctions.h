@@ -2,8 +2,8 @@
 
 #include "SevenZipLibrary.h"
 #include "CompressionFormat.h"
-#include <7zip/cpp/7zip/Archive/IArchive.h>	// PWH. vcpkg path
-#include <7zip/c/7zTypes.h>					// PWH. vcpkg path
+#include <7zip/Archive/IArchive.h>
+#include <7zTypes.h>
 #include "GUIDs.h"
 #include "FileSys.h"
 #include "ArchiveOpenCallback.h"

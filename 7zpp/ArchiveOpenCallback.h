@@ -3,8 +3,8 @@
 #pragma once
 
 
-#include <7zip/cpp/7zip/Archive/IArchive.h>	// PWH. vcpkg path
-#include <7zip/cpp/7zip/IPassword.h>		// PWH. vcpkg path
+#include <7zip/Archive/IArchive.h>
+#include <7zip/IPassword.h>
 
 
 namespace SevenZip

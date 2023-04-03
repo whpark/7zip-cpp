@@ -27,10 +27,12 @@ namespace SevenZip {
 
 			inline static std::vector<BYTE> s_dummy;
 			std::deque<std::vector<BYTE>>& m_buffers;
+			std::span<uint32_t> m_zipIndices;	// zip index -> buffer index
 		public:
 
-			MemExtractCallback2(const CComPtr< IInArchive >& archiveHandler, std::deque<std::vector<BYTE>>& buffers, const TString& archivePath, const TString& password, ProgressCallback* callback) :
+			MemExtractCallback2(const CComPtr< IInArchive >& archiveHandler, std::span<uint32_t> zipIndices, std::deque<std::vector<BYTE>>& buffers, const TString& archivePath, const TString& password, ProgressCallback* callback) :
 				MemExtractCallback(archiveHandler, s_dummy, archivePath, password, callback),
+				m_zipIndices(std::move(zipIndices)),
 				m_buffers(buffers) {
 			}
 
@@ -44,18 +46,18 @@ namespace SevenZip {
 			//STDMETHOD(CheckBreak)();
 
 			// IMemExtractCallback
-			STDMETHOD(GetStream)(UInt32 index, ISequentialOutStream** outStream, Int32 askExtractMode) {
+			STDMETHOD(GetStream)(UInt32 zipIndex, ISequentialOutStream** outStream, Int32 askExtractMode) {
 				try
 				{
 					// Retrieve all the various properties for the file at this index.
-					GetPropertyFilePath(index);
+					GetPropertyFilePath(zipIndex);
 					if (askExtractMode != NArchive::NExtract::NAskMode::kExtract)
 					{
 						return S_OK;
 					}
 
-					GetPropertyIsDir(index);
-					GetPropertySize(index);
+					GetPropertyIsDir(zipIndex);
+					GetPropertySize(zipIndex);
 				}
 				catch (_com_error& ex)
 				{
@@ -64,11 +66,15 @@ namespace SevenZip {
 
 				if (!m_isDir)
 				{
-					CComPtr<ISequentialOutStream> outStreamLoc(new COutMemStream(m_buffers[index]));
-					m_outMemStream = outStreamLoc;
-					*outStream = outStreamLoc.Detach();
+					for (uint32_t index{}; index < m_zipIndices.size(); index++) {
+						if (m_zipIndices[index] != zipIndex)
+							continue;
+						CComPtr<ISequentialOutStream> outStreamLoc(new COutMemStream(m_buffers[index]));
+						m_outMemStream = outStreamLoc;
+						*outStream = outStreamLoc.Detach();
+						break;
+					}
 				}
-
 
 				return CheckBreak();
 			}
@@ -82,7 +88,7 @@ namespace SevenZip {
 
 	using namespace intl;
 
-	bool SevenZipExtractorMem::ExtractFileToMemoryMulti(std::vector<uint32_t> const& indices, std::deque<std::vector<BYTE>>& out_buffer, ProgressCallback* callback /*= nullptr*/)
+	bool SevenZipExtractorMem::ExtractFileToMemoryMulti(std::span<uint32_t> indices, std::deque<std::vector<BYTE>>& out_buffer, ProgressCallback* callback /*= nullptr*/)
 	{
 		CComPtr< IStream > archiveStream = FileSys::OpenFileToRead(m_archivePath);
 		if (archiveStream == nullptr)
@@ -101,7 +107,7 @@ namespace SevenZip {
 		}
 
 		out_buffer.resize((size_t)indices.size());
-		CComPtr< MemExtractCallback2 > extractCallback = new MemExtractCallback2(archive, out_buffer, m_archivePath, m_password, callback);
+		CComPtr< MemExtractCallback2 > extractCallback = new MemExtractCallback2(archive, indices, out_buffer, m_archivePath, m_password, callback);
 
 		hr = archive->Extract(indices.data(), indices.size(), false, extractCallback);
 		if (hr != S_OK)

@@ -4,6 +4,7 @@
 
 #include <deque>
 #include <vector>
+#include <span>
 
 #include "SevenZipExtractor.h"
 
@@ -16,6 +17,6 @@ namespace SevenZip
 		SevenZipExtractorMem( const SevenZipLibrary& library, const TString& archivePath ) : SevenZipExtractor(library, archivePath) {}
 		virtual ~SevenZipExtractorMem() {}
 
-		bool ExtractFileToMemoryMulti(std::vector<uint32_t> const& indices, std::deque<std::vector<BYTE>>& out_buffer, ProgressCallback* callback = nullptr);
+		bool ExtractFileToMemoryMulti(std::span<uint32_t> indices, std::deque<std::vector<BYTE>>& out_buffer, ProgressCallback* callback = nullptr);
 	};
 }

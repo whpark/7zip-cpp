@@ -52,6 +52,10 @@
     <ClCompile Include="SevenZipArchive.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="MemExtractCallback.cpp" />
+    <ClCompile Include="OutMemStream.cpp" />
+    <ClCompile Include="SevenString.cpp" />
+    <ClCompile Include="SevenZipExtractorMem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="7zpp.h">
@@ -132,6 +136,9 @@
     <ClInclude Include="SevenZipArchive.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="MemExtractCallback.h" />
+    <ClInclude Include="OutMemStream.h" />
+    <ClInclude Include="SevenZipExtractorMem.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">

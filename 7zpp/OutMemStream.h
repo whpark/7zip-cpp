@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include <7zip/cpp/7zip/IStream.h>	// PWH. vcpkg path
+#include <7zip/IStream.h>
 
 namespace SevenZip
 {
